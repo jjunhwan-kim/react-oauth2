@@ -1,11 +1,9 @@
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import { useCookies } from 'react-cookie'
 
 const Home = () => {
-  const [searchParams] = useSearchParams();
-  const accessToken = searchParams.get("access_token");
-  const refreshToken = searchParams.get("refresh_token");
-  const accessTokenExpiration = searchParams.get("access_token_expiration");
+
+  const [cookies, setCookie] = useCookies();
 
   return (
     <div>
@@ -18,10 +16,9 @@ const Home = () => {
       <a href="http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:3000">
         <button>Kakao Login</button>
       </a>
-
-      <p>Access Token : {accessToken}</p>
-      <p>Refresh Token : {refreshToken}</p>
-      <p>Access Token Expiration : {accessTokenExpiration}</p>
+      <p>Access Token : {cookies.access_token}</p>
+      <p>Refresh Token : {cookies.refresh_token}</p>
+      <p>Access Token Expiration : {atob(cookies.access_token_expire_time, 'base64url')}</p>
     </div>
   );
 };
